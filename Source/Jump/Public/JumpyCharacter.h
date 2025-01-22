@@ -36,6 +36,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "mInput")
 	UInputAction* MoveAction;
 
+	UPROPERTY(EditAnywhere, Category = "mInput")
+	UInputAction* LookAction;
+
+	UPROPERTY(EditAnywhere, Category = "mInput")
+	UInputAction* JumpAction;
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArm;
@@ -44,4 +50,6 @@ private:
 	UCameraComponent* Camera;
 	
 	void Move(const FInputActionValue& value);
+	void Look(const FInputActionValue& value);
+	void JumpFunc(const FInputActionValue& value);
 };

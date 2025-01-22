@@ -50,7 +50,6 @@ void AJumpyCharacter::BeginPlay()
 			Subsystem->AddMappingContext(IMCJumpy, 0);
 		}
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Hello World"));
 }
 
 // Called every frame
@@ -70,15 +69,38 @@ void AJumpyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	if(EnhancedInputComponent) 
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AJumpyCharacter::Move);
+		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AJumpyCharacter::Look);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AJumpyCharacter::Jump);
 	}
 
 }
 
 void AJumpyCharacter::Move(const FInputActionValue& value)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Input Move"));
 	FVector2D RCVValue = value.Get<FVector2D>();
-	UE_LOG(LogTemp, Warning, TEXT("The vector value is: %s"), *RCVValue.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("The vector value is: %s"), *RCVValue.ToString());
+
+	FRotator ControlRotation = GetControlRotation();
+
+	FVector ForwardVector = FRotationMatrix(FRotator(0,ControlRotation.Yaw,0)).GetUnitAxis(EAxis::X);
+	FVector RightVector = FRotationMatrix(FRotator(0, ControlRotation.Yaw, ControlRotation.Roll)).GetUnitAxis(EAxis::Y);
+	
+	AddMovementInput(ForwardVector, RCVValue.Y);
+	AddMovementInput(RightVector, RCVValue.X);
+}
+
+void AJumpyCharacter::Look(const FInputActionValue& value)
+{
+	FVector2D RCVValue = value.Get<FVector2D>();
+	//UE_LOG(LogTemp, Warning, TEXT("The vector value is: %s"), *RCVValue.ToString());
+
+	AddControllerPitchInput(RCVValue.Y);
+	AddControllerYawInput(RCVValue.X);
+}
+
+void AJumpyCharacter::JumpFunc(const FInputActionValue& value)
+{
+	Jump();
 }
 
 
