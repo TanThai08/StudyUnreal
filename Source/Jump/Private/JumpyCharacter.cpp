@@ -42,6 +42,9 @@ void AJumpyCharacter::BeginPlay()
 
 	if (JumpyController)
 	{
+		PlayerHUD = CreateWidget<UJumpyUI>(JumpyController, widgetSubcllass);
+		PlayerHUD->AddToViewport();
+
 		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(JumpyController->GetLocalPlayer());
 
 		if (Subsystem) 

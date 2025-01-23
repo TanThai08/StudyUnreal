@@ -7,6 +7,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "JumpyCharacter.h"
 #include "Elevator.generated.h"
 
 UCLASS()
@@ -19,6 +21,12 @@ public:
 	AElevator();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (MakeEditWidget = true))
+	FVector StartLocation;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (MakeEditWidget = true))
+	FVector EndLocation;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -30,4 +38,31 @@ private:
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* Box;
+
+	FTimerHandle TimerForStayingDown;
+	FTimerHandle TimerForStayUp;
+
+	UFUNCTION()
+	void SetGoToEndLocation();
+	UFUNCTION()
+	void SetGoToStartLocation();
+
+	UPROPERTY(EditAnywhere)
+	float TimeToStayDown = 2;
+	UPROPERTY(EditAnywhere)
+	float TimeToStayUp = 2;
+
+	bool GoToEndLocation = false; 
+	bool GoToStartLocation = false;
+
+	bool isPlayerOut = true;
+
+	UFUNCTION()
+	void OnBeginElevatorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+		const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnEndElevatorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 };
