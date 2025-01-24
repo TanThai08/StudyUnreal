@@ -44,6 +44,7 @@ void AJumpyCharacter::BeginPlay()
 	{
 		PlayerHUD = CreateWidget<UJumpyUI>(JumpyController, widgetSubcllass);
 		PlayerHUD->AddToViewport();
+		PlayerHUD->SetCoin(0);
 
 		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(JumpyController->GetLocalPlayer());
 
@@ -60,6 +61,10 @@ void AJumpyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (PlayerHUD)
+	{
+		PlayerHUD->SetHeight(GetActorLocation().Z);
+	}
 }
 
 // Called to bind functionality to input

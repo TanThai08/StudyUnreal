@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/TextBlock.h"
+#include "Components/ProgressBar.h"
 #include "JumpyUI.generated.h"
 
 /**
@@ -14,4 +16,23 @@ class JUMP_API UJumpyUI : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public: 
+	void SetHeight(int32 Height);
+	void SetCoin(int32 Amount);
+	void IncreaseCoin(int32 Amount);
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UTextBlock* HeightText;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UTextBlock* MaxHeightTextBlock;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UTextBlock* CoinText;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UProgressBar* MaxHeightProgressBar;
+
+	int32 MaxHeight;
+	int32 CoinAmount;
 };
