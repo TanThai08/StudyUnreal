@@ -25,6 +25,12 @@ void UJumpyUI::SetHeight(int32 Height)
 		FText MaxHeightFText = FText::Format(LOCTEXT("ShowMaxHeight", "{0}"), MaxHeight);
 		MaxHeightTextBlock->SetText(MaxHeightFText);
 	}
+
+	//Reset game
+	if((Height < -100)) 
+	{
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+	}
 }
 
 void UJumpyUI::SetCoin(int32 Amount)

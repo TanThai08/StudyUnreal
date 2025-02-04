@@ -26,7 +26,6 @@ void AItem::BeginPlay()
 	Ring->SetWorldRotation(FRotator(0, 0, UKismetMathLibrary::RandomIntegerInRange(0, 15) * 22));
 
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItem::OnPlayerEnter);
-	BoxCollision->OnComponentEndOverlap.AddDynamic(this, &AItem::OnPlayerExit);
 }
 
 void AItem::OnPlayerEnter(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -36,12 +35,9 @@ void AItem::OnPlayerEnter(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 	if (tempPlayer)
 	{
 		tempPlayer->PlayerHUD->IncreaseCoin(ScoreItem);
+		UGameplayStatics::PlaySoundAtLocation(this, CoinCollectedSound, GetActorLocation());
 		Destroy();
 	}
-}
-
-void AItem::OnPlayerExit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
 }
 
 // Called every frame

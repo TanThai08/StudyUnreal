@@ -6,26 +6,20 @@
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "JumpyCharacter.h"
-#include "Kismet/GameplayStatics.h"
-#include "Sound/SoundBase.h"
-#include "Item.generated.h"
+#include "PlatformActive.generated.h"
 
 UCLASS()
-class JUMP_API AItem : public AActor
+class JUMP_API APlatformActive : public AActor
 {
 	GENERATED_BODY()
-
-public:
+	
+public:	
 	// Sets default values for this actor's properties
-	AItem();
+	APlatformActive();
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	UPROPERTY()
-	int32 ScoreItem = 1;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -35,16 +29,15 @@ private:
 	UBoxComponent* BoxCollision;
 
 	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Orb;
+	UStaticMeshComponent* Mesh;
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Ring;
+	UPROPERTY(EditAnywhere)
+	bool isActive = true;
+
 
 	UFUNCTION()
 	void OnPlayerEnter(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 		const FHitResult& SweepResult);
 
-	UPROPERTY(EditAnywhere)
-	USoundBase* CoinCollectedSound;
 };

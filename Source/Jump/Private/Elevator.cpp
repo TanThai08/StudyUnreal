@@ -60,7 +60,7 @@ void AElevator::OnEndElevatorOverlap(UPrimitiveComponent* OverlappedComponent, A
 	if (PLayer)
 	{
 		isPlayerOut = true;
-		GetWorldTimerManager().SetTimer(TimerForStayingDown, this, &AElevator::SetGoToEndLocation, TimeToStayDown, false);
+
 	}
 }
 
@@ -93,6 +93,7 @@ void AElevator::Tick(float DeltaTime)
 		double Distance = UKismetMathLibrary::Vector_Distance(TempLocation, StartLocation);
 		if (Distance < 20)
 		{
+			GetWorldTimerManager().SetTimer(TimerForStayingDown, this, &AElevator::SetGoToEndLocation, TimeToStayDown, false);
 			GoToStartLocation = false;
 		}
 	}

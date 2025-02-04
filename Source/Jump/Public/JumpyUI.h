@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 #include "Components/ProgressBar.h"
+#include "Kismet/GameplayStatics.h"
 #include "JumpyUI.generated.h"
 
 /**
