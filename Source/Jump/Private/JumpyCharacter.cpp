@@ -79,6 +79,7 @@ void AJumpyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AJumpyCharacter::Move);
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AJumpyCharacter::Look);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AJumpyCharacter::Jump);
+		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &AJumpyCharacter::Attack);
 	}
 
 }
@@ -109,6 +110,17 @@ void AJumpyCharacter::Look(const FInputActionValue& value)
 void AJumpyCharacter::JumpFunc(const FInputActionValue& value)
 {
 	Jump();
+}
+
+void AJumpyCharacter::Attack(const FInputActionValue& value)
+{
+	FVector directionAttack = GetActorLocation() + GetActorForwardVector() * 100;
+
+	FRotator RotationAttack = GetActorRotation();
+
+	AActor* BulletTemp = GetWorld()->SpawnActor<AActor>(Bullet, directionAttack, RotationAttack);
+
+	UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
 }
 
 

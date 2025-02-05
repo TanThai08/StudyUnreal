@@ -51,6 +51,17 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "mInput")
 	UInputAction* JumpAction;
 
+	UPROPERTY(EditAnywhere, Category = "mAttack")
+	UInputAction* AttackAction;
+
+	UPROPERTY(EditAnywhere, Category = "mAttack")
+	TSubclassOf<AActor> Bullet;
+
+	UPROPERTY(EditAnywhere, Category = "mAttack")
+	bool IsCanAttack = true;
+
+	UPROPERTY(EditAnywhere, Category = "mAttack")
+	float TimeDelayAttack = 0.2; 
 private:
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArm;
@@ -61,4 +72,5 @@ private:
 	void Move(const FInputActionValue& value);
 	void Look(const FInputActionValue& value);
 	void JumpFunc(const FInputActionValue& value);
+	void Attack(const FInputActionValue& value);
 };
