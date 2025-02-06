@@ -28,7 +28,7 @@ void ASpawnManager::SpawnObject()
 		//FVector tempLocation = RandomLocation();
 
 		//location spawn
-		FVector tempLocation = FVector(GetActorLocation().X, GetActorLocation().Y, 50);
+		FVector tempLocation = GetActorLocation();
 		int32 Row = i / 10;
 		int32 Colum = i % 10;
 		tempLocation.X += Row * 250;
