@@ -47,4 +47,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	USoundBase* CoinCollectedSound;
+ 
+	UPROPERTY(EditAnyWhere, Category = "Grab Component")
+	TSubclassOf<USceneComponent> GrabComponentClass;
+	USceneComponent* GrabComponent;
+	void SetupGrabComponent(); 
 };

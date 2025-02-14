@@ -22,25 +22,32 @@ void ASpawnManager::BeginPlay()
 
 void ASpawnManager::SpawnObject()
 {
-	for (size_t i = 0; i < SizeSpawn; i++)
+	if (BlueprintToSpawn)
 	{
-		// Create Items
-		//FVector tempLocation = RandomLocation();
+		for (size_t i = 0; i < SizeSpawn; i++)
+		{
+			// Create Items
+			//FVector tempLocation = RandomLocation();
 
-		//location spawn
-		FVector tempLocation = FVector(GetActorLocation().X, GetActorLocation().Y, 50);
-		int32 Row = i / 10;
-		int32 Colum = i % 10;
-		tempLocation.X += Row * 250;
-		tempLocation.Y += Colum * 250;
+			//location spawn
+			FVector tempLocation = GetActorLocation();
+			int32 Row = i / 10;
+			int32 Colum = i % 10;
+			tempLocation.X += Row * 250;
+			tempLocation.Y += Colum * 250;
 
-		FRotator tempRotation = FRotator::ZeroRotator;
-		AActor* SpawnedActor = GetWorld()->SpawnActor<AActor>(BlueprintToSpawn, tempLocation, tempRotation);
+			FRotator tempRotation = FRotator::ZeroRotator;
+			AActor* SpawnedActor = GetWorld()->SpawnActor<AActor>(BlueprintToSpawn, tempLocation, tempRotation);
 
-		//Set value
-		AItem* item = Cast<AItem>(SpawnedActor); 
-		item->ScoreItem = i + 1;
-	}	
+			//Set value
+			AItem* item = Cast<AItem>(SpawnedActor);
+			item->ScoreItem = i + 1;
+		}
+	}
+	else 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Chua co object de spawn"));
+	}
 }
 
 FVector ASpawnManager::RandomLocation()

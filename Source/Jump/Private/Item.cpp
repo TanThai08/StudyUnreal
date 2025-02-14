@@ -26,6 +26,8 @@ void AItem::BeginPlay()
 	Ring->SetWorldRotation(FRotator(0, 0, UKismetMathLibrary::RandomIntegerInRange(0, 15) * 22));
 
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItem::OnPlayerEnter);
+
+	SetupGrabComponent();
 }
 
 void AItem::OnPlayerEnter(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -38,6 +40,21 @@ void AItem::OnPlayerEnter(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 		UGameplayStatics::PlaySoundAtLocation(this, CoinCollectedSound, GetActorLocation());
 		Destroy();
 	}
+}
+
+void AItem::SetupGrabComponent()
+{
+	if (GrabComponentClass)
+	{
+		GrabComponent = NewObject<USceneComponent>(this, GrabComponentClass);
+
+		if (GrabComponent)
+		{		
+			GrabComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+			GrabComponent->RegisterComponent();
+		}
+	}
+
 }
 
 // Called every frame
