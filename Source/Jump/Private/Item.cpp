@@ -50,7 +50,7 @@ void AItem::SetupGrabComponent()
 
 		if (GrabComponent)
 		{		
-			GrabComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+			GrabComponent->AttachToComponent(Orb, FAttachmentTransformRules::KeepRelativeTransform);
 			GrabComponent->RegisterComponent();
 		}
 	}
